@@ -1,19 +1,28 @@
 
 import sqlite3
 
-connection = sqlite3.connect("students.db")
-cursor = connection.cursor()
+DATABASE = "students.db"
 
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS students (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
-    department TEXT NOT NULL,
-    email TEXT NOT NULL UNIQUE
-)
-""")
 
-connection.commit()
-connection.close()
+def get_db():
+    connection = sqlite3.connect(DATABASE)
+    connection.row_factory = sqlite3.Row
+    return connection
 
-print("Database and table created successfully")
+
+def init_db():
+    with get_db() as connection:
+        connection.execute("""
+            CREATE TABLE IF NOT EXISTS students (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                email TEXT NOT NULL UNIQUE,
+                password TEXT NOT NULL,
+                department TEXT NOT NULL
+            )
+        """)
+
+
+if __name__ == "__main__":
+    init_db()
+    print("Database initialized successfully.")
