@@ -1,0 +1,19 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Dashboard</title>
+</head>
+<body>
+    <h2>Student Dashboard</h2>
+
+    {% for student in students %}
+        <p>ID: {{ student.id }}</p>
+        <p>Name: {{ student.name }}</p>
+        <p>Email: {{ student.email }}</p>
+        <p>Department: {{ student.department }}</p>
+    {% endfor %}
+
+    <a href="/logout">Logout</a>
+</body>
+</html>
