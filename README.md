@@ -169,13 +169,13 @@ The application provides a search endpoint to find student records by name.
 ## Endpoint
 
 ```text
-GET /search?name=Rahul
+GET /search?name=Lokesh
 ```
 
 ## Local URL
 
 ```text
-http://127.0.0.1:5000/search?name=Rahul
+http://127.0.0.1:5000/search?name=Lokesh
 ```
 
 ## Example JSON Response
@@ -184,8 +184,8 @@ http://127.0.0.1:5000/search?name=Rahul
 [
   {
     "id": 1,
-    "name": "Rahul",
-    "department": "CSE"
+    "name": "Lokesh",
+    "department": "CSE[AIML]"
   }
 ]
 ```
