@@ -21,8 +21,3 @@ def init_db():
                 department TEXT NOT NULL
             )
         """)
-
-
-if __name__ == "__main__":
-    init_db()
-    print("Database initialized successfully.")
