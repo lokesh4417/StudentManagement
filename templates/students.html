@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Management</title>
+</head>
+<body>
+    <h2>Student Information</h2>
+
+    {% if students %}
+        <table border="1" cellpadding="8">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Department</th>
+                <th>Actions</th>
+            </tr>
+
+            {% for student in students %}
+            <tr>
+                <td>{{ student.id }}</td>
+                <td>{{ student.name }}</td>
+                <td>{{ student.email }}</td>
+                <td>{{ student.department }}</td>
+                <td>
+                    <a href="/update/{{ student.id }}">Update</a>
+
+                    <form method="POST"
+                          action="/delete/{{ student.id }}"
+                          style="display:inline"
+                          onsubmit="return confirm('Delete this student?')">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No student records found.</p>
+    {% endif %}
+
+    <p><a href="/logout">Logout</a></p>
+    <p><a href="/">Home</a></p>
+</body>
+</html>
