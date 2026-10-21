@@ -11,7 +11,7 @@ registration_bp = Blueprint("registration", __name__)
 def register():
     if request.method == "POST":
         name = request.form.get("name", "").strip()
-        email = request.form.get("email", "").strip()
+        email = request.form.get("email", "").strip().lower()
         password = request.form.get("password", "")
         department = request.form.get("department", "").strip()
 
@@ -20,18 +20,31 @@ def register():
 
         try:
             with get_db() as connection:
-                connection.execute("""
-                    INSERT INTO students (name, email, password, department)
+                # Check whether the email already exists.
+                existing = connection.execute(
+                    "SELECT id FROM students WHERE email = ?",
+                    (email,)
+                ).fetchone()
+
+                if existing:
+                    return "Email already registered", 409
+
+                connection.execute(
+                    """
+                    INSERT INTO students
+                    (name, email, password, department)
                     VALUES (?, ?, ?, ?)
-                """, (
-                    name,
-                    email,
-                    generate_password_hash(password),
-                    department
-                ))
+                    """,
+                    (
+                        name,
+                        email,
+                        generate_password_hash(password),
+                        department
+                    )
+                )
 
         except sqlite3.IntegrityError:
-            return "Email already registered", 409
+            return "Unable to register: check the submitted details.", 400
 
         return redirect(url_for("registration.registered"))
 
